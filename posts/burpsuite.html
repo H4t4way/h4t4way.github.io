@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>What is Burpsuite Certified Practitioner!</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="../assets/css/index.css">
+  
+  <link rel="stylesheet" href="../assets/css/classes.css">
+  <link rel="stylesheet" href="../assets/fontawesome/font-awesome-4-7.min.css">
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+  <header class="icons" style="background-image: url('https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/525300/9c12958380e4d743d8061e9c7ebe09d97ce573fe.jpg')">
+    <h1 style="color:white;text-align:center;">H4t4way's Blog</h1>
+    
+    <nav>
+      <a aria-label="Categories" href="../index.html" ><span aria-hidden="true" >Home</span></a>
+      <a aria-label="Archive" href="../blog.html" ><span aria-hidden="true" >Blog</span></a>
+      <a aria-label="About" href="#" ><span aria-hidden="true" >Tag</span></a>
+      
+      
+      <span onclick=ToggleTheme()>|<a id="themeTglClsLnk" href="javascript:void(0);"><i class="fa fa-toggle-on" fa fa-toggle-on></i>Theme</a></span>
+      </nav>
+
+  <span class="subheading" style="color: white;"><b><h2>Penetration Tester | OSCP | eWPT | Burpsuite Certified | CNSS </h2></b></span>  
+  
+</header>
+
+
+<script src="../assets/themeToggle.js"></script>
+<article>
+  <header>
+  
+    <div class="categories">WebSec</div>
+  
+  <h1>What is Burpsuite Certified Practitioner!</h1><time datetime="2022-03-25T00:00:00+00:00">March 25, 2022</time>
+</header>
+
+  <h1 id="introduction">Introduction</h1>
+<p>The BurpSuite certification is a medium/hard  CTF/exam where puts your web skills tested. </p>
+
+                    <p>It is a four-hour exam and by passing it you’ll be able to demonstrate the ability to:</p>
+                    <ul>
+                        <li>Detect and prove the full business impact of a wide range of common web vulnerabilities - such as XSS, SQLi, OWASP Top 10 and HTTP Request Smuggling.</li>
+                        <li>Detect and prove the full business impact of a wide range of common web vulnerabilities - such as XSS, SQLi, OWASP Top 10 and HTTP Request Smuggling. </li>
+                        <li>Quickly identify weak points within an attack surface, and perform out-of-band attacks to attack them, using manual tools to aid exploitation.</li>
+                    </ul>
+<hr />
+
+
+<img class="img-responsive" src="../img-post/burp-image.png" alt="error"><br>
+<h2 class="subheading">How the exam is structured</h2>
+<p>
+    You will have four hours to complete the Burp Suite Certified Practitioner exam. There are two applications, and each application contains deliberate vulnerabilities. This means that each application can be completed in three stages:</p>
+<ul>
+    <li><b>Stage 1:</b> Access any user account.</li>
+    <li><b>Stage 2:</b> Use your user account to access the admin interface at /admin, perhaps by elevating your privileges or compromising the administrator account.</li>
+    <li><b>Stage 3:</b> Use the admin interface to read the contents of /home/carlos/secret from the server's filesystem, and submit it using "submit solution".</li>
+</ul>
+
+
+
+
+<h2 class="subheading">How to prepare the Exam</h2>
+<p><b>These are just my personal thoughts and opinions that led me to pass the exam.</b> If you already have experience with web application testing, I suggest do the labs anyway or at least to see how portswigger academy allows you to exploit server-side vulnerabilities via their exploit server.
+<p>Another point to consider is that vulnerabilities such as XSS or other client-side vulnerabilities require real interaction with a user/bots, as explained in the exam. 
+I suggest you to learn or deepen how to create a working PoC to steal for example cookies, reset token, to perform clickjacking via an iframe and send it to the victim user.  
+</p>
+<p>Before giving the Burp Suite Certified Practitioner exam, I always recommend that you complete or at least be at or below the "Practitioner" level.
+   You can also use the Practice exam to prepare for the exam. It's simulate an environment of a real test situation, and will cover a variety of vulnerability classes and exploits.
+</p>
+<img class="img-responsive" src="../img-post/burp-2.png" alt="error"><br>
+<p>Another test you can take that I recommend before taking the exam is the mystery challenge. 
+   You can choose the difficulty level and the topic of interest and portswigger will start the lab. 
+   Otherwise choosing only the level and selecting any, the challenge in my opinion becomes much more truthful 
+   and similar to the exam.
+</p>
+<img class="img-responsive" src="../img/mistery-chall.png" alt="error"><br>
+
+<b>Very Important TIPS:</b>
+<p>We know that the 2 applications that you need to hack involve different steps and for each step we have a goal. If the first step is to steal the session/impersonate a user, I suggest to divide all vulnerabilities into different types, client-side and server-side.</p>
+<p>The three steps must be completed in order.  This means that if you are in an application, attempting to enter the admin interface is a waste of time if you do not yet have access to a user account, or maybe attempting to read files if you do not have access to an administrator account. </p>
+
+<p>Be careful because sometimes there could be <b>rabbit holes</b>. If you see that you are stuck at some point or maybe you do not get anything on the exploit server or burp collaborator, take a break and start from another bug, do not focus too much, if it does not come, once you identify the vulnerability, the exploitation is pretty much straightforward, maybe some bypass could be needed.</p>  
+
+
+<h2 class="subheading">My Exam</h2>
+
+<p>On my first attempts, I got through the entire first application very quickly, with more than half the time remaining, it certainly felt like I should be able to finish the exam. Well, things did not work out well. I spent way too much time on what I thought was the right path, and in the final it turned out to be a rabbit hole.<br>
+    
+When I only had one step left, I got stuck on the last step of the second application. Even when I had more than an hour to figure it out, it finally ended in a failed attempt. 5/6 Boom failed.</p>
+
+<p>After many attempts, this time I was very determined to not fall down another time on rabbit hole.</p>
+<p>The exam applications are randomly selected at the beginning, so you do not get the same applications.</p>
+<p>This time I really went straight through all the weak spots and the 2 applications.</p>
+<p>Boom, after more than 2 hours left I was done. 6 out of 6 vulnerabilities.</p>
+
+<img class="img-responsive" src="../img-post/esame-burp.jpeg" alt="error"><br>
+
+<h2 class="subheading">Final Tips</h2>
+                    
+                    <ul>
+                    <li>Do the free Web Security Academy Labs to prepare you for the exam </li>    
+                    <li>Do the practice exam</li>
+                    <li>Do the mystery challenge</li>
+                    <li>The time looks enough, but you have 6 bug to identify and exploit, be ready with all the environment for not loosing time.</li>
+                    <li>Don’t fall and do not create your own rabbit holes :) </li>
+                    <li>Take notes during your exam, it will help to mapp the application and the exam</li>
+                    <li>If you fail, spend more time in the Web Security Academy</li>
+                    </ul>
+
+                    <p>My Credential <a href="https://portswigger.net/web-security/e/c/3ce55a2f17f8d80b" target="_blank">Burpsuite Certified</a>
+
+
+
+<hr />
+ 
+</div>
+
+  
+</article>
+
+
+<footer>
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <strong><h3>You can Find me on:</h3></strong>
+              <ul class="list-inline text-center">
+                  <li>
+                      <a href="https://twitter.com/H4t4Way">
+                          
+                          <strong>Twitter</strong>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="https://www.linkedin.com/in/reajpr/">
+                          <strong> Linkedin</strong>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="https://github.com/H4t4way">
+                           <strong> Github</strong> 
+                      </a>
+                  </li>
+              </ul>
+              <p class="copyright text-muted">Copyright &copy; Your Website 2022</p>
+          </div>
+      </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../js/clean-blog.min.js"></script>
+</body>
+
+</html>

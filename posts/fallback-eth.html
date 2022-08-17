@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Fallback Challenge </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="../assets/css/index.css">
+  
+  <link rel="stylesheet" href="../assets/css/classes.css">
+  <link rel="stylesheet" href="../assets/fontawesome/font-awesome-4-7.min.css">
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+  <header class="icons" style="background-image: url('https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/525300/9c12958380e4d743d8061e9c7ebe09d97ce573fe.jpg')">
+    <h1 style="color:white;text-align:center;">H4t4way's Blog</h1>
+    
+    <nav>
+      <a aria-label="Categories" href="../index.html" ><span aria-hidden="true" >Home</span></a>
+      <a aria-label="Archive" href="../blog.html" ><span aria-hidden="true" >Blog</span></a>
+      <a aria-label="About" href="#" ><span aria-hidden="true" >Tag</span></a>
+      
+      
+      <span onclick=ToggleTheme()>|<a id="themeTglClsLnk" href="javascript:void(0);"><i class="fa fa-toggle-on" fa fa-toggle-on></i>Theme</a></span>
+      </nav>
+
+  <span class="subheading" style="color: white;"><b><h2>Penetration Tester | OSCP | eWPT | Burpsuite Certified | CNSS </h2></b></span>  
+  
+</header>
+
+
+<script src="../assets/themeToggle.js"></script>
+<article>
+  <header>
+  
+    <div class="categories">Web3</div>
+  
+  <h1>Fallback Ethernaut Challenge</h1><time datetime="2022-03-25T00:00:00+00:00">March 25, 2022</time>
+</header>
+
+  <h1 id="introduction">Introduction</h1>
+<p>
+  The <a href="https://ethernaut.openzeppelin.com/">Ethernaut</a> is a Web3/Solidity based wargame inspired by overthewire.org, 
+  and played in the Ethereum Virtual Machine.
+   Each level is a smart contract that needs to be 'hacked'.<br>
+   Before you start playing this Ethernaut challenge, you need to understand a few things. 
+   First, this challenge is about first becoming the owner of the smart contract in question. 
+   Only the owner of this contract can do things like withdraw money from the contract. 
+   So study the contract and look for possible ways to become its owner.<br><br>
+    
+The second part of this challenge is to withdraw all the money from the contract. 
+We will see how to do that by interacting with a contract's ABI (Application Binary Interface).  
+
+<h2 class="subheading">The Challenge</h2>
+<script src="https://gist.github.com/H4t4way/663393eade62cbc6e65ea1764a24cbef.js"></script>
+   
+<h3 class="subheading">Analyze The Code</h3>
+
+<p>
+
+The first thing we can do is to get a new istance of the smart contract. 
+It is important to know that when we press the <em>Get New Istance</em> button, we are not the principal of the contract. 
+Openzeppelin will deploy the contract and thus is the owner of the contract.
+
+<img class="img-responsive" src="../img-post/meta-1.png" alt=""><br>
+
+Now Let's jump to analyze the code and try to understand it. 
+</p>
+
+<script src="https://gist.github.com/H4t4way/65e127964bbef384a77f4045e84a07d5.js"></script>
+
+<p>
+<blockquote>
+<p>Every smart contract start with the <em>pragma</em> directive that specify the version of the compiler that will execute the code.</p>
+</blockquote>
+After that we can see that a Solidity library called <em>safeMath.sol</em>has been imported . <br>
+Open Zeppelin provides a whole set of smart contract libraries like safeMath allow us to safely perform mathematical operations in 
+smart contracts.<br>
+
+<ul>
+  <li>Smart Contracts start with the keyword contract, in this scenario the name is <em>fallback</em>.</li>
+  <li>In a Smart Contracts there is a function called <em>Constructor</em> and this is executed only once
+    during the lifetime of the smart contract, and it get executed when the contract is deployed. </li>
+<li>There is a public variable --> <em>owner</em>, which is of type address and is specified when the constructor is called.<br>
+  The address that get insert on the public variable is the msg.sender. 
+</li>
+<li>
+  msg is a global variable in your solidity code and represents the transaction. The sender value of the msg object is the actual sender
+  of the transaction that deployed the contract.  
+</li>
+<li>
+  Another thing that happens on the contract is this mapping called <em>contrubutions</em> with a certain amount of ether.<br>
+  In Solidity there is a data structure called mapping that is a kind of hash map or dictionary.
+  In our scenario this mapping contribution rappreset a "database" of addresses of how much ether/token each address has. 
+</li>
+<li>
+Finally, there is a modifier function called <em>onlyOwner</em> that says that  whoever sends a transaction must also be the owner.
+</li>
+</ul>
+</p>
+
+
+
+
+<p>
+Let's take some information about the contract and other data of the challenge.
+If we open our dev console in the browser, we can call a function to retrieve data.
+<img class="img-responsive" src="../img-post/fallback-1.png" alt=""><br>
+
+With the first command, <code>player</code> we identify ourselves as our address, which is connected to the Ethernaut webiste..<br>
+After that , with <code>contract</code> and <code>contract.address</code> we can interact and see the abi and the address of the contract.<br>
+In final we can retrive who is the owner of the contract with the await js function.<br> 
+<strong>Note (Contract address and onwer address are different, of course as the smart contract har his properly address,
+and the owenr addres is who deployed the contract and is the owner). </strong>
+</p>
+<h2 class="subheading">The Vulnerability</h2>
+
+Let's see now how we can be the owner of the contract and how can withdraw money from that.<br>
+
+<script src="https://gist.github.com/H4t4way/e98874e80580036e1034041a3184ddfa.js"></script>
+
+<p>
+If we read the code, we see a function called <em>contribute</em> that is payable, which means that you can send money to this function.<br>
+The first requirement is that the amount of money sent to this contract cannot be too much, it must be <code><</code> than 0.001 Ether.
+<br>
+ After the request, we set our internal "database" of contribution allocation by adding the value that the msg.sender sent to 
+the contribution function.
+After the require functions we are setting our internal "databse" of contribution mapping, adding the value that the msg.sender sent 
+to the contribution function
+
+
+What's interesting here is the if statement, which says that if the amount of the contribution from 
+the sender or the person performing the contribute function is greater <code>></code>  than the amount of the contribution from the owner, 
+then the sender of the transaction that called the function becomes the owner of the contract. 
+<br>
+<strong>Bug:</strong> <br>
+It is possible to call the contribute function many times to get a larger contribution from the owner.
+<br>
+<br>
+After that there is something very interesting, in the final of the contract there is a function without mane that is payable and external. 
+<br>
+This function is very special and is the <strong>fallback function.</strong><br>
+The fallback function in Solidity is called when you send a transaction to a contract and you do not specify the name of the function or you make a mistake, this function is called.
+In the fallback function, the value we send to this function must be greater than 0. If the sender of this transaction has more than 0 contribution tokens/money in the mapping data structure (our dictionary), we can become the owner.
+
+</p>
+
+ 
+<p>
+  <em>How to be the owner of the contract?</em>
+  We need to be sure to have some amount of contribution on the contract.
+</p>
+
+
+<img class="img-responsive" src="../img-post/fallback-2.png" alt=""><br>
+
+<p>
+  As we can see with the ABI of the contract with js, by calling the contract.contribution function, 
+  we can see that the player (us) has no contribution to the mapping data structure (our dictionary). 
+  So we need to contribute and send some money to the contract to fulfil one of the requirements of the fallback function.
+</p>
+
+<p>
+  Here we can maybe write a smart contract to interact with it, or we can use the dev console and play with the ABI structure and send some money to the contract.
+
+<img class="img-responsive" src="../img-post/fallback-3.png" alt=""><br>
+
+What we do here, we call the function contribute and send 1 wei, so the status of the contrast will change, our contribution will be greater than 0, so the requirement is met.
+
+<img class="img-responsive" src="../img-post/fallback-4.png" alt=""><br>
+
+We can see also on etherscan that the transaction was confirmed and we send 1 wei. 
+Now we need to send some money to the contract, where so also the first requirement/condition of the fallback function 
+will be fulfilled and we can become the owner of the contract.
+
+
+When we call the <code>sendTransaction</code> function in our dev console to send money, 
+we do not call any function of the contract, so the fallback function is executed.
+
+
+
+<img class="img-responsive" src="../img-post/fallback-5.png" alt=""><br>
+
+As we can see the result, before to sending the transaction, the owner of the contract was other than us(the player),
+now, after the transaction, we are the owner of the contract and we have completed the first step of the challenge.
+
+
+<img class="img-responsive" src="../img-post/fallback-6.png" alt=""><br>
+
+In the second step, we have to withdraw all the balance of the contract to 0.
+We know that the withdraw function can only be called by the owner since we are now the owner, we can do it.<br>
+
+<img class="img-responsive" src="../img-post/fallback-7.png" alt=""><br>
+
+We can use <code>await getBalance(contract.address)</code> function to retrive the balance of the contract.
+Now we call the withdraw function, and when the transaction is confirmed we can see that we have stolen all the money 
+of the contract. 
+</p>
+
+<h3 class="subheading">Conslusion</h3>
+
+<p>
+
+  In this first challenge of the Ethernaut Web3/Solidity wargame, we learned about ownership, about importing libraries, and most importantly about the fallback function.
+ Now we just need to submit the task and complete the instance.
+  <img class="img-responsive" src="../img-post/fallback-8.png" alt=""><br>
+</p>
+
+<hr />
+ 
+</div>
+
+  
+</article>
+
+
+<footer>
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <strong><h3>You can Find me on:</h3></strong>
+              <ul class="list-inline text-center">
+                  <li>
+                      <a href="https://twitter.com/H4t4Way">
+                          
+                          <strong>Twitter</strong>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="https://www.linkedin.com/in/reajpr/">
+                          <strong> Linkedin</strong>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="https://github.com/H4t4way">
+                          <strong> Github</strong> 
+                      </a>
+                  </li>
+              </ul>
+              <p class="copyright text-muted">Copyright &copy; Your Website 2022</p>
+          </div>
+      </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../js/clean-blog.min.js"></script>
+</body>
+
+</html>

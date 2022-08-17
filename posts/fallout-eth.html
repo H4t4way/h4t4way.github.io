@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Fallout Challenge </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="../assets/css/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../assets/css/classes.css">
+  <link rel="stylesheet" href="../assets/fontawesome/font-awesome-4-7.min.css">
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  
+  
+</head>
+
+<body>
+  <header class="icons" style="background-image: url('https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/525300/9c12958380e4d743d8061e9c7ebe09d97ce573fe.jpg')">
+    <h1 style="color:white;text-align:center;">H4t4way's Blog</h1>
+    
+    <nav>
+      <a aria-label="Categories" href="../index.html" ><span aria-hidden="true" >Home</span></a>
+      <a aria-label="Archive" href="../blog.html" ><span aria-hidden="true" >Blog</span></a>
+      <a aria-label="About" href="#" ><span aria-hidden="true" >Tag</span></a>
+      
+      
+      <span onclick=ToggleTheme()>|<a id="themeTglClsLnk" href="javascript:void(0);"><i class="fa fa-toggle-on" fa fa-toggle-on></i>Theme</a></span>
+      </nav>
+
+  <span class="subheading" style="color: white;"><b><h2>Penetration Tester | OSCP | eWPT | Brupsuite Certified | CNSS </h2></b></span>  
+  
+</header>
+
+
+<script src="../assets/themeToggle.js"></script>
+<article>
+  <header>
+  
+    <div class="categories">Web3</div>
+  
+  <h1>Fallout Ethernaut Challenge</h1><time datetime="2022-03-25T00:00:00+00:00">Jun 30, 2022</time>
+</header>
+
+  <h1 id="introduction">Introduction</h1>
+<p>
+  The <a href="https://ethernaut.openzeppelin.com/">Ethernaut</a> is a Web3/Solidity based wargame inspired by overthewire.org, 
+  and played in the Ethereum Virtual Machine.
+   Each level is a smart contract that needs to be 'hacked'.<br>
+<br><br>
+    
+The goal of this challenge is analyze the code and to claim ownership of the contract to complete the level.
+We will see how to do that by interacting with a contract's ABI (Application Binary Interface).  
+
+<h2 class="subheading">The Challenge</h2>
+
+<p>
+    The first thing we can do is to get a new istance of the smart contract. 
+    It is important to know that when we press the <em>Get New Istance</em> button, we are not the principal of the contract. 
+    Openzeppelin will deploy the contract and thus is the owner of the contract.    
+</p>
+
+<img class="img-responsive" src="../img-post/fallback-1.png" alt="error"><br>
+<h3 class="subheading">Analyze The Code</h3>
+
+<p>
+
+
+
+
+
+Now Let's jump to analyze the code and try to understand it. 
+</p>
+
+<script src="https://gist.github.com/H4t4way/df1c64193cecfabdd0ca7dda9692aeea.js"></script>
+<p>
+<blockquote>
+<p>Every smart contract start with the <em>pragma</em> directive that specify the version of the compiler that will execute the code.</p>
+</blockquote>
+After that, we can see that a Solidity library called <em>SafeMath.sol</em> has been imported . <br>
+In the following code, the SafeMath.sol library is used for the state variable for unisgned integer(uint256).<br>
+Open Zeppelin provides a whole set of smart contract libraries like SafeMath that allow us to safely perform mathematical operations in 
+smart contracts.<br>
+
+
+If we look at it, there is a function that is used as constructor of the contract (very bad :( ).
+The constructor is executed only once and the person who uses the contract becomes the owner of the contract.
+<ul>
+    <li>
+        On the contract is this mapping called <code>allocations</code> with a certain amount of ether.<br>
+        In Solidity there is a data structure called mapping that is a kind of hash map or dictionary.
+        In our scenario this mapping contribution rappreset a "database" of addresses of how much ether/token each address has. 
+      </li>
+    <li>Smart Contracts start with the keyword contract, in this scenario the name is <code>Fallout</code>.</li>
+  <li>There is a public variable --> <em>owner</em>, which is of type address and is specified when the constructor is called.<br>
+    The address that get insert on the public variable is the msg.sender. 
+  </li>
+  <li>
+    msg is a global variable in your solidity code and represents the transaction. The sender value of the msg object is the actual sender
+    of the transaction that deployed the contract.  
+  </li>
+  
+  <li>
+ There is a modifier function called <code>onlyOwner</code> that says that  whoever sends a transaction must also be the owner.
+  </li>
+  <li>
+    There are several functions such as <code>allocate</code>, <code>sendAllocation</code> and <code>collectAllocations</code> that manage the transfer and allocation of address balances.     </li>
+  </ul>
+</p>
+
+
+
+<h2 class="subheading">The Vulnerability</h2>
+
+
+
+
+
+<script src="https://gist.github.com/H4t4way/dfa8d0d35f01eecebea8a5f78c976e8e.js"></script>
+
+<p>
+If we read the code, we see the <em>constructor</em> function, seems that to has the same name as the contract (very bad practise) but is not.<br>
+The constructor is named <code>Fal1out</code> with a 1 instead of an l. 
+So <code>Fallout</code>is misspelled <code>Fal1out</code>, which causes the constructor function to become a public function that you can call at any time.
+<br>
+<br>
+<strong>Bug:</strong> <br>
+If we check with the dev console, we can see that the <em>contructor</em> function is accessible through the ABI of the smart contracts.
+This is absolutely wrong, as the constructor should not be public and executable through the ABI. (Typo error of the function contructor.)
+<br>
+Since is a typo the constructor is a public function and anyone can call it and become the owner of the contract bacause inside
+the function <code>owner == msg.sender</code> is set , where <em>msg.sender</em> is the one that performs the transaction
+
+
+<img class="img-responsive" src="../img-post/fallout/fallout-2.png" alt="error"><br>
+<br>
+Since the constructor is a publicly accessible function, the vulnerability is that whoever performs a transaction and calls this function become the owner of the contract.
+</p>
+
+ 
+<h3>How can we become the owner of the contract?</h3>
+
+<p> 
+ As we can see, at the moment we are not the owner of the contract.
+ To become the owner we can use the dev console, use the ABI of the smart contract 
+ and call the function <code>Fal1out()</code>, which assigns the owner to msg.sender.
+</p>
+
+<img class="img-responsive" src="../img-post/fallout/fallout-3.png" alt="error"><br>
+
+<p>
+
+After the transaction has been mined, we can see by calling the <code>await contract.owner()</code> function again that the address is now our account address.
+
+</p>
+
+<img class="img-responsive" src="../img-post/fallout/fallout-4.png" alt="error"><br>
+
+
+<h2 class="subheading">Conslusion</h2>
+
+
+<p>
+    <strong>KEY TAKEAWAY FROM CHALLENGE:</strong><br>
+
+Always use the <code>constructor()</code> function when defining a constructor in your contract.  
+The constructor is a function that gets executed only once when your contract is first deployed.  <br>
+DO NOT declare a constructor function using the same name as your contract.
+</p>
+
+<img class="img-responsive" src="../img-post/fallout/fallout-5.png" alt="error"><br>
+<hr />
+ 
+</div>
+
+  
+</article>
+
+
+<footer>
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <strong><h3>You can Find me on:</h3></strong>
+              <ul class="list-inline text-center">
+                  <li>
+                      <a href="https://twitter.com/H4t4Way">
+                          
+                          <strong>Twitter</strong>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="https://www.linkedin.com/in/reajpr/">
+                          <strong> Linkedin</strong>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="https://github.com/H4t4way">
+                           <strong> Github</strong> 
+                      </a>
+                  </li>
+              </ul>
+              <p class="copyright text-muted">Copyright &copy; Your Website 2022</p>
+          </div>
+      </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../js/clean-blog.min.js"></script>
+</body>
+
+</html>

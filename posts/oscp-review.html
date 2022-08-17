@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>OSCP Review!</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="../assets/css/index.css">
+  
+  <link rel="stylesheet" href="../assets/css/classes.css">
+  <link rel="stylesheet" href="../assets/fontawesome/font-awesome-4-7.min.css">
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header class="icons" style="background-image: url('https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/525300/9c12958380e4d743d8061e9c7ebe09d97ce573fe.jpg')">
+    <h1 style="color:white;text-align:center;">H4t4way's Blog</h1>
+    
+    <nav>
+      <a aria-label="Categories" href="../index.html" ><span aria-hidden="true" >Home</span></a>
+      <a aria-label="Archive" href="../blog.html" ><span aria-hidden="true" >Blog</span></a>
+      <a aria-label="About" href="#" ><span aria-hidden="true" >Tag</span></a>
+      
+      
+      <span onclick=ToggleTheme()>|<a id="themeTglClsLnk" href="javascript:void(0);"><i class="fa fa-toggle-on" fa fa-toggle-on></i>Theme</a></span>
+      </nav>
+
+  <span class="subheading" style="color: white;"><b><h2>Penetration Tester | OSCP | eWPT | Burpsuite Certified | CNSS </h2></b></span>  
+  
+</header>
+
+
+<script src="../assets/themeToggle.js"></script>
+<article>
+  <header>
+  
+    <div class="categories">General Pentest</div>
+  
+  <h1>OSCP (Offensive Security Certified Professional) Review</h1><time datetime="2022-03-25T00:00:00+00:00">March 25, 2022</time>
+</header>
+
+  <h1 id="introduction">Introduction</h1>
+<p>On the 27th of February, 2021, 
+  I successfully pass the OSCP exam. 
+  I will tell/explain my opinions, my methodology on how I did the exam and my preparation. 
+
+<h2 class="subheading">Pre-Exam</h2>
+<p>
+Having already been doing pentest for a few years, I wasn't worried much about the exam. 
+On a daily basis I was doing web application testing, so in the web part I was pretty confident.
+Where I knew I had gaps was the windows privilege escalation part. 
+<br>
+To make up for that I bought the <strong>Windows Privilege Escalation</strong> course 
+from <a href="https://academy.tcm-sec.com/p/linux-privilege-escalation">TheCyberMentor</a> which 
+gave me a solid foundation on how to do priv esc.
+<br>
+For the <strong>Buffer Overflow</strong> part my knowledge was quite basic but with the help of our team mentor
+ <a href="https://www.linkedin.com/in/knx/">Darix Deros(aka KNX)</a> 
+ where in several lessons he gave us the right tools to approach bof in the best way, I strengthened myself on that part as well.
+ In any case, I also recommend the following labs to more easily dimesticate the bof:
+</p><ul><li><a href="https://tryhackme.com/room/bufferoverflowprep">Buffer Overflow Prep</a></li>
+  <li><a href="https://tryhackme.com/room/brainpan">Brainpan 1</a></li></ul><p>
+</p>
+
+<h2 class="subheading">How to prepare the Exam</h2>
+<p> During the PWK course I completed 50 of 65(if I'm not wrong) of the lab machines.<br>
+  Once I finished studying the material, finished the labs and ran out of time (I had 60 days of labs) I adopted a different method.
+I saw many people follow HTB or TryHackMe lists for OSCP, I instead went straight to Proving Grounds, which was then newly born and focused on here labs.
+
+<p>I started with play topic(from vulnhub) machines to become more and more confident. 
+  After completing about 20 of them between easy and medium I moved to the practice section, where former exam machines were posted. 
+</p>
+<img class="img-responsive" src="../img-post/proving.png" alt="error"><br>
+
+<p>
+
+In the practice section, the machines are very interesting. Real OSCP boxes with the same mentality as the exam <strong>(Try Harder)</strong>.
+During the machines I learned various new techniques of priv. esc, both in Linux and Windows environment. <br>
+By the end of my preparation, I came to take the OSCP exam with 50 machines made of the PWK labs, 
+and about 70 machines on the proving grounds labs
+</p>
+<h2 class="subheading">The Exam</h2>
+
+<p>I started my Exam on 27th of February at 7 am in the morning.<br>
+After the proctor verified all my data, I was able to download my vpn access and could finally start.
+I did not use automation for scanning. Each machine had a separate folder and its own separate nmap scan.
+(I recommend learning to use tmux and moving around with various windows in the terminal).<br><br>
+I started with the buffer overflow, where in about 45 minutes, between finding offesets, 
+badchars and injecing the shellcode I had access to the victim machine.
+Taking all the screenshots, writing the python script to exploit it, after 1 hour I got my first 25 points.
+
+Once the buffer overflow was over, I took a look at the results of the various scans, seeing a few machines might have been "easier." <br>
+The important thing during the scan is to take breaks. Tackling OSCP without a break is really tough and at some point the fatigue will set in.
+Stop and relax. Smoke a cigarette, sleep if you need to but stopping will give your brain a chance to reset and restart more charged than ever.
+
+</p>
+
+<p>
+  By about 6 p.m. I had my 70 points. 
+  I had completed the two 25-point machines and one 20-point machine.
+  I left the 10 machine for last in case I needed points to get to the minimum threshold. 
+  From here let's say it went all downhill. 
+  After dinner I completed the 10-point machine and concentrated on the last 20-point machine.
+
+I finished my exam with 90 points around 2 am the following day.
+I made sure I took all the screenshots and had all the material to then complete the report.
+</p>
+
+
+
+<b>Very Important TIPS:</b>
+
+<p>Be careful because sometimes there could be <b>rabbit holes</b>. 
+  If you see that you are stuck at some point or maybe you do not get anything, 
+  take a break and start from another bug, do not focus too much, if it does not come, once you identify the vulnerability, 
+  the exploitation is pretty much straightforward, maybe some bypass could be needed.</p>  
+
+
+
+<h2 class="subheading">Final Tips</h2>
+                    
+                    <ul>
+                    <li>Do a lot of machine from maybe HTB or TryHackMe</li>    
+                    <li>Do the practice section on Proving grounds</li>
+                    <li>The time looks enough, but be ready with all the environment for not loosing time.</li>
+                    <li>Don’t fall and do not create your own rabbit holes :) </li>
+                    <li>Take notes during your exam, it will help to mapp the differents machines during the exam</li>
+                    </ul>
+
+                    <p>My Credential <a href="https://www.credly.com/badges/5869e332-abe0-4daa-b1e9-33afddfe5af5/public_url" target="_blank">OSCP </a>
+
+
+
+<hr />
+ 
+</div>
+
+  
+</article>
+
+
+<footer>
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <strong><h3>You can Find me on:</h3></strong>
+              <ul class="list-inline text-center">
+                  <li>
+                      <a href="https://twitter.com/H4t4Way">
+                          
+                          <strong>Twitter</strong>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="https://www.linkedin.com/in/reajpr/">
+                         <strong> Linkedin</strong>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="https://github.com/H4t4way">
+                           <strong> Github</strong> 
+                      </a>
+                  </li>
+              </ul>
+              <p class="copyright text-muted">Copyright &copy; Your Website 2022</p>
+          </div>
+      </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script src="../js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../js/clean-blog.min.js"></script>
+</body>
+
+</html>
